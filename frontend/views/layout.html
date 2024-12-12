@@ -1,0 +1,26 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <title>Tienda de Pingüinos</title>
+</head>
+<body>
+  <header>
+    <h1>Tienda de Pingüinos</h1>
+    <nav>
+      <a href="/">Inicio</a>
+      <a href="/checkout">Pedidos</a>
+    </nav>
+  </header>
+  <main>
+    {{template "content" .}}
+  </main>
+  <footer>
+    <p>&copy; 2024 Tienda de Pingüinos</p>
+  </footer>
+</body>
+</html>
+{{end}}

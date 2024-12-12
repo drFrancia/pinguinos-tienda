@@ -1,0 +1,12 @@
+{{define "content"}}
+<h2>Productos Disponibles</h2>
+<ul>
+  {{range .}}
+  <li>
+    <h3>{{.Name}}</h3>
+    <p>Precio: ${{.Price}}</p>
+    <p>{{.Description}}</p>
+  </li>
+  {{end}}
+</ul>
+{{end}}

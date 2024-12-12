@@ -1,0 +1,54 @@
+{{define "content"}}
+<h2>Realizar Pedido</h2>
+<form id="orderForm">
+  <label for="name">Nombre:</label>
+  <input type="text" id="name" name="name" required>
+  <br>
+  <label for="address">Dirección:</label>
+  <input type="text" id="address" name="address" required>
+  <br>
+  <h3>Productos:</h3>
+  <ul>
+    <li>
+      <input type="checkbox" name="products" value="Pescado"> Pescado
+    </li>
+    <li>
+      <input type="checkbox" name="products" value="Hielo"> Hielo
+    </li>
+    <li>
+      <input type="checkbox" name="products" value="Esmoquin de Pingüino">
+      Esmoquin de Pingüino
+    </li>
+  </ul>
+  <button type="submit">Enviar Pedido</button>
+</form>
+
+<script>
+  const form = document.getElementById("orderForm");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    const name = formData.get("name");
+    const address = formData.get("address");
+    const products = formData.getAll("products");
+
+    const order = { name, address, products };
+
+    const response = await fetch("http://localhost:3000/api/orders/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(order),
+    });
+
+    if (response.ok) {
+      alert("Pedido enviado con éxito");
+      form.reset();
+    } else {
+      alert("Error enviando el pedido");
+    }
+  });
+</script>
+
+{{end}}

@@ -1,0 +1,18 @@
+doctype html
+html(lang="es")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Tienda de Pingüinos
+    link(rel="stylesheet", href="/public/css/styles.css")
+  body
+    h1 Tienda de Pingüinos
+    ul
+      each producto in .
+        li
+          h2= producto.Name
+          p Precio: $#{producto.Price}
+          p #{producto.Description}
+          form(action="/confirm" method="POST")
+            input(type="hidden" name="id" value=producto.ID)
+            button(type="submit") Comprar

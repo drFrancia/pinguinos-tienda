@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title Pedidos - Admin Panel
+  body
+    h1 Pedidos Realizados
+    table
+      thead
+        tr
+          th Nombre
+          th Dirección
+          th Productos
+          th Fecha
+      tbody
+        each order in orders
+          tr
+            td= order.name
+            td= order.address
+            td
+              ul
+                each product in order.products
+                  li= product
+            td= new Date(order.date).toLocaleString()

@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title Productos - Admin Panel
+  body
+    h1 Administrar Productos
+    table
+      thead
+        tr
+          th Nombre
+          th Precio
+          th Descripción
+          th Acciones
+      tbody
+        each product in products
+          tr
+            td= product.name
+            td $#{product.price}
+            td= product.description
+            td
+              form(action=`/admin/products/edit/${product._id}` method="POST")
+                input(type="text" name="name" value=product.name required)
+                input(type="number" name="price" value=product.price required)
+                input(type="text" name="description" value=product.description)
+                button(type="submit") Editar
+              form(action=`/admin/products/delete/${product._id}` method="POST")
+                button(type="submit") Eliminar
+    h2 Crear Producto
+    form(action="/admin/products/create" method="POST")
+      input(type="text" name="name" placeholder="Nombre del Producto" required)
+      input(type="number" name="price" placeholder="Precio" required)
+      input(type="text" name="description" placeholder="Descripción")
+      button(type="submit") Crear Producto
