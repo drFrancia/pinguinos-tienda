@@ -14,7 +14,7 @@ export const createOrder = async (req, res) => {
 };
 
 // Obtener todos los pedidos
-export const getOrdersPage = async (req, res) => {
+export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find().sort({ date: -1 });
     res.render("orders", { orders });

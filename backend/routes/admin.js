@@ -1,11 +1,12 @@
 import express from 'express';
-import { login } from '../controllers/authController.js';
 import { authenticate } from '../middlewares/auth.js';
-import { getDashboard } from '../controllers/adminController.js';
-import productRoutes from './product.js';
-import { getOrdersPage } from "../controllers/adminController.js";
-
-
+import { login } from '../controllers/authController.js';
+import {
+  getAllProducts,
+  createProduct,
+  editProduct,
+  deleteProduct,
+} from '../controllers/productController.js';
 
 const router = express.Router();
 
@@ -14,13 +15,14 @@ router.get('/login', (req, res) => res.render('login'));
 router.post('/login', login);
 
 // Dashboard protegido
-router.get('/dashboard', authenticate, getDashboard);
+router.get('/dashboard', authenticate, (req, res) => {
+  res.render('dashboard', { user: req.user });
+});
 
 // Rutas de productos
-router.use('/products', authenticate, productRoutes);
-
-//Rutas de ordenes
-router.get("/orders", authenticate, getOrdersPage);
-
+router.get('/products', authenticate, getAllProducts);
+router.post('/products/create', authenticate, createProduct);
+router.post('/products/edit/:id', authenticate, editProduct);
+router.post('/products/delete/:id', authenticate, deleteProduct);
 
 export default router;
