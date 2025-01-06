@@ -8,6 +8,7 @@ import {
   deleteProduct,
 } from '../controllers/productController.js';
 
+import { createOrder } from '../controllers/orderController.js';
 const router = express.Router();
 
 // Login
@@ -21,8 +22,22 @@ router.get('/dashboard', authenticate, (req, res) => {
 
 // Rutas de productos
 router.get('/products', authenticate, getAllProducts);
+
+router.get('/products/create', authenticate, (req, res) =>{
+  res.render('crear');
+});
+
 router.post('/products/create', authenticate, createProduct);
+router.get('/products/descripcion', authenticate, getAllProducts);
+
+
 router.post('/products/edit/:id', authenticate, editProduct);
 router.post('/products/delete/:id', authenticate, deleteProduct);
+
+// Ruta pública para productos (sin autenticación)
+router.get('/public/products', getAllProducts);
+
+// Ruta para crear pedidos
+router.post('/orders', createOrder);
 
 export default router;

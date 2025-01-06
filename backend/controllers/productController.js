@@ -4,11 +4,12 @@ import Product from '../models/Product.js';
 export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find();
-    res.render('products', { products });
+    res.render('descripcion', { products });
   } catch (err) {
     res.status(500).send("Error al obtener productos: " + err.message);
   }
 };
+
 
 // API para obtener productos en JSON
 export const getProductsAPI = async (req, res) => {
@@ -25,7 +26,7 @@ export const createProduct = async (req, res) => {
   try {
     const { name, price, description } = req.body;
     await Product.create({ name, price, description });
-    res.redirect('/admin/products');
+    res.redirect('/admin/products/descipcion');
   } catch (err) {
     res.status(500).send("Error al crear producto: " + err.message);
   }

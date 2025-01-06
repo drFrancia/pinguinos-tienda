@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Penguin</title>
+</head>
+<body>
+  <h1>Bienvenido a la Tienda Penguin</h1>
+
+  <!-- Sección para mostrar los productos -->
+  <h2>Productos disponibles</h2>
+  <div id="products"></div>
+
+  <!-- Formulario para realizar un pedido -->
+  <h2>Realizar un pedido</h2>
+  <form id="orderForm">
+    <label for="name">Nombre:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="address">Dirección:</label>
+    <input type="text" id="address" name="address" required><br>
+
+    <label for="products">Productos (IDs separados por comas):</label>
+    <input type="text" id="productsInput" name="products" required><br>
+
+    <button type="submit">Enviar Pedido</button>
+  </form>
+
+  <div id="orderMessage"></div>
+
+  <script>
+    // Cargar productos al iniciar la página
+    window.onload = () => {
+      fetch("http://localhost:8080/products")
+        .then((response) => response.json())
+        .then((products) => {
+          const productsDiv = document.getElementById("products");
+          if (products.length === 0) {
+            productsDiv.innerHTML = "<p>No hay productos disponibles.</p>";
+          } else {
+            const productList = products.map(
+              (product) =>
+                `<p><strong>${product.name}</strong>: $${product.price} - ${product.description}</p>`
+            );
+            productsDiv.innerHTML = productList.join("");
+          }
+        })
+        .catch((err) => {
+          console.error("Error al obtener los productos:", err);
+        });
+    };
+
+    // Manejar el envío del formulario de pedidos
+    document.getElementById("orderForm").onsubmit = (event) => {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const address = document.getElementById("address").value;
+      const productsInput = document.getElementById("productsInput").value;
+
+      const products = productsInput.split(",").map((id) => id.trim());
+
+      fetch("http://localhost:8080/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          address,
+          products,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            document.getElementById("orderMessage").innerText =
+              "Pedido realizado con éxito.";
+          } else {
+            document.getElementById("orderMessage").innerText =
+              "Error al realizar el pedido.";
+          }
+        })
+        .catch((err) => {
+          console.error("Error al realizar el pedido:", err);
+        });
+    };
+  </script>
+</body>
+</html>

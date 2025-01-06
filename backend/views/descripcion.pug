@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        title Ver Productos
+    body
+        h1 Administrar Productos
+        table
+        thead
+            tr
+            th Nombre
+            th Precio
+            th Descripción
+            th Acciones
+        tbody
+            each product in products
+            tr
+                td= product.name
+                td $#{product.price}
+                td= product.description
+
+

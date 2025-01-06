@@ -1,0 +1,17 @@
+{{define "content"}}
+<h2>Realizar Pedido</h2>
+<form action="http://localhost:3000/admin/orders" method="POST">
+  <label>Nombre:</label>
+  <input type="text" name="name" required><br>
+  <label>Dirección:</label>
+  <input type="text" name="address" required><br>
+  <h3>Selecciona productos:</h3>
+  {{range .}}
+  <label>
+    <input type="checkbox" name="products" value="{{.Name}}"> {{.Name}} - ${{.Price}}
+  </label><br>
+  {{end}}
+  <button type="submit">Enviar Pedido</button>
+</form>
+{{end}}
+

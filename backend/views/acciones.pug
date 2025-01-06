@@ -1,0 +1,22 @@
+doctype html
+html
+    head
+        title Acciones
+    body
+        h1 Acciones  
+        table
+        thead
+            tr
+                td= product.name
+                td $#{product.price}
+                td= product.description
+                td
+                form(action=`/admin/products/edit/${product._id}` method="POST")
+                    input(type="text" name="name" value=product.name required)
+                    input(type="number" name="price" value=product.price required)
+                    input(type="text" name="description" value=product.description)
+                    button(type="submit") Editar
+                form(action=`/admin/products/delete/${product._id}` method="POST")
+                    button(type="submit") Eliminar
+
+

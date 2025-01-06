@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 // Rutas
 app.use('/admin', adminRoutes);
 app.use('/admin/orders', orderRoutes);
+app.use('/public/products', adminRoutes);
 
 // Conexión a MongoDB
 mongoose.connect(process.env.MONGO_URI)
